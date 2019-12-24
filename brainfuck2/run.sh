@@ -8,7 +8,7 @@ echo Crystal
 echo Rust
 ../xtime.rb ./bin_rs bench.b
 echo Scala
-../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. BrainFuck bench.b
+../xtime.rb scala BrainFuck bench.b
 echo Java
 ../xtime.rb java bf bench.b
 echo Kotlin
@@ -22,7 +22,7 @@ echo Vala Gcc
 echo Vala Clang
 ../xtime.rb ./bin_vala_clang bench.b
 echo Elixir
-../xtime.rb erl -pa /usr/lib/elixir/lib/elixir/ebin -noshell -s elixir start_cli -extra bf.ex bench.b
+../xtime.rb elixir bf.ex bench.b
 echo F# .NET Core
 ../xtime.rb dotnet bin_fs/netcoreapp3.0/brainfuck2.dll bench.b
 echo Haskell

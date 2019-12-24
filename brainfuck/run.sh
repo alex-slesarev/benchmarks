@@ -22,7 +22,7 @@ echo Nim Gcc
 echo Nim Clang
 ../xtime.rb ./brainfuck_nim_clang bench.b
 echo Scala
-../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. BrainFuck bench.b
+../xtime.rb scala BrainFuck bench.b
 echo Javascript Node
 ../xtime.rb node brainfuck.js bench.b
 echo Julia

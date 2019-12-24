@@ -28,7 +28,7 @@ echo Nim Clang
 echo Julia
 ../xtime.rb julia --optimize=3 --check-bounds=no test.jl
 echo Scala
-../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. Base64
+../xtime.rb scala Base64
 echo Java
 ../xtime.rb java Base64Java
 echo Kotlin

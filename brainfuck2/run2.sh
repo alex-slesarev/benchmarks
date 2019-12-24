@@ -24,7 +24,7 @@ echo "Haskell (MArray)"
 echo Java
 ../xtime.rb java bf mandel.b > /dev/null
 echo Scala
-../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. BrainFuck mandel.b > /dev/null
+../xtime.rb scala BrainFuck mandel.b > /dev/null
 echo Kotlin
 ../xtime.rb java -jar bf2-kt.jar mandel.b > /dev/null
 echo OCaml

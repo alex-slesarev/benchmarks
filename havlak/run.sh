@@ -10,7 +10,7 @@ echo GccGo
 echo Crystal
 ../xtime.rb ./havlak_cr
 echo Scala
-../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. -Xss100m LoopTesterApp
+../xtime.rb scala -J-Xss100m LoopTesterApp
 echo D
 ../xtime.rb ./havlak_d
 echo D Gdc
