@@ -1,22 +1,27 @@
 require 'json'
 require 'socket'
 
-begin
-  Socket.tcp('localhost', 9001) { |s|
-    engine = "#{RUBY_ENGINE}"
-    if engine == "truffleruby"
-      desc = "#{RUBY_DESCRIPTION}"
-      if desc.include?('Native')
-        engine = "TruffleRuby Native"
-      elsif desc.include?('JVM')
-        engine = "TruffleRuby JVM"
-      end
-    end
-    s.puts engine
-  }
-rescue
-  # standalone usage
+def notify(msg)
+  begin
+    Socket.tcp('localhost', 9001) { |s|
+      s.puts msg
+    }
+  rescue
+    # standalone usage
+  end
 end
+
+engine = "#{RUBY_ENGINE}"
+if engine == "truffleruby"
+  desc = "#{RUBY_DESCRIPTION}"
+  if desc.include?('Native')
+    engine = "TruffleRuby Native"
+  elsif desc.include?('JVM')
+    engine = "TruffleRuby JVM"
+  end
+end
+pid = Process.pid
+notify("#{engine}\t#{pid}")
 
 jobj = JSON.parse(File.read('1.json'))
 coordinates = jobj['coordinates']
@@ -32,3 +37,5 @@ end
 p x / len
 p y / len
 p z / len
+
+notify("stop")

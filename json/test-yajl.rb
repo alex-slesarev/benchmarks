@@ -1,13 +1,18 @@
 require 'yajl'
 require 'socket'
 
-begin
-  Socket.tcp('localhost', 9001) { |s|
-    s.puts "Ruby YAJL"
-  }
-rescue
-  # standalone usage
+def notify(msg)
+  begin
+    Socket.tcp('localhost', 9001) { |s|
+      s.puts msg
+    }
+  rescue
+    # standalone usage
+  end
 end
+
+pid = Process.pid
+notify("Ruby YAJL\t#{pid}")
 
 jobj = Yajl::Parser.new.parse(File.read('1.json'))
 coordinates = jobj['coordinates']
@@ -23,3 +28,5 @@ end
 p x / len
 p y / len
 p z / len
+
+notify("stop")

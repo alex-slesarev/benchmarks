@@ -4,13 +4,18 @@ require "socket"
 len = 0
 x = y = z = 0
 
-begin
-  TCPSocket.open("localhost", 9001) { |s|
-    s.puts "Crystal Pull"
-  }
-rescue
-  # standalone usage
+def notify(msg)
+  begin
+    TCPSocket.open("localhost", 9001) { |s|
+      s.puts msg
+    }
+  rescue
+    # standalone usage
+  end
 end
+
+pid = Process.pid
+notify("Crystal Pull\t#{pid}")
 
 File.open("1.json") do |file|
   pull = JSON::PullParser.new(file)
@@ -32,3 +37,5 @@ end
 p x / len
 p y / len
 p z / len
+
+notify("stop")
