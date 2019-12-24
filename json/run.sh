@@ -62,7 +62,7 @@ echo Ruby
 echo Ruby YAJL
 ../xtime.rb ruby test-yajl.rb
 echo Scala
-../xtime.rb scala -cp json-scala/target/application.jar JsonTest
+../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. -jar json-scala/target/application.jar JsonTest
 echo Perl
 ../xtime.rb perl -Iperllib/lib/perl5 test.pl
 echo Perl XS

@@ -8,6 +8,8 @@ def mem(pid)
   unless RUBY_PLATFORM =~ /darwin/
     children_rss = `ps --ppid #{pid} -o rss`
     children_rss.split("\n").drop(1).each do |mem|
+      # TODO: remove ppid usage
+      abort("children")
       overall += mem.to_i
     end
   end
@@ -20,6 +22,7 @@ class EnergyStats
   def initialize
     @acc_e = 0
     @e = 0
+    # TODO: use /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj
     @has_energy_metrics = find_executable 'rapl-info'
     if @has_energy_metrics
       @max_e = `rapl-info -J`.to_i

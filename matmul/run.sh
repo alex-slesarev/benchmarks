@@ -24,7 +24,7 @@ echo Nim Gcc
 echo Nim Clang
 ../xtime.rb ./matmul_nim_clang 1500
 echo Scala
-../xtime.rb scala MatMul 1500
+../xtime.rb java -cp `scala -e 'print(sys.props("scala.boot.class.path"))'`:. MatMul 1500
 echo Java
 ../xtime.rb java matmul 1500
 echo Kotlin
