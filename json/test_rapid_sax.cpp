@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <iostream>
 #include <libsocket/inetclientstream.hpp>
+#include <sstream>
+#include <unistd.h>
 
 using namespace std;
 using namespace rapidjson;
@@ -91,13 +93,19 @@ private:
   double x_, y_, z_;
 };
 
+void notify(const string& msg) {
+  try {
+    libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
+    sock << msg;
+  } catch (...) {
+    // standalone usage
+  }
+}
+
 int main() {
-    try {
-      libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
-      sock << "C++ RapidJSON SAX";
-    } catch (...) {
-      // standalone usage
-    }
+    stringstream ostr;
+    ostr << "C++ RapidJSON SAX\t" << getpid();
+    notify(ostr.str());
 
     FILE* fp = std::fopen("./1.json", "r");
     char buffer[65536];
@@ -108,4 +116,5 @@ int main() {
     reader.Parse(frs, handler);
 
     fclose(fp);
+    notify("stop");
 }

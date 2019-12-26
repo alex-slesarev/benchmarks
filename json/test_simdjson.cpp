@@ -1,16 +1,24 @@
 #include <iostream>
 #include <libsocket/inetclientstream.hpp>
 #include "simdjson/jsonparser.h"
+#include <sstream>
+#include <unistd.h>
 
 using namespace simdjson;
 
-int main(int argc, char *argv[]) {
+void notify(const string& msg) {
   try {
     libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
-    sock << "C++ simdjson";
+    sock << msg;
   } catch (...) {
     // standalone usage
   }
+}
+
+int main(int argc, char *argv[]) {
+  stringstream ostr;
+  ostr << "C++ simdjson\t" << getpid();
+  notify(ostr.str());
 
   padded_string p = get_corpus("1.json"); 
   ParsedJson pj;
@@ -76,5 +84,6 @@ int main(int argc, char *argv[]) {
   std::cout << y / len << std::endl;
   std::cout << z / len << std::endl;
 
+  notify("stop");
   return EXIT_SUCCESS;
 }

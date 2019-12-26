@@ -3,17 +3,25 @@
 #include <cstdio>
 #include <iostream>
 #include <libsocket/inetclientstream.hpp>
+#include <sstream>
+#include <unistd.h>
 
 using namespace std;
 using namespace rapidjson;
 
+void notify(const string& msg) {
+  try {
+    libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
+    sock << msg;
+  } catch (...) {
+    // standalone usage
+  }
+}
+
 int main() {
-    try {
-      libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
-      sock << "C++ RapidJSON";
-    } catch (...) {
-      // standalone usage
-    }
+    stringstream ostr;
+    ostr << "C++ RapidJSON\t" << getpid();
+    notify(ostr.str());
 
     FILE* fp = std::fopen("./1.json", "r");
     char buffer[65536];
@@ -38,5 +46,6 @@ int main() {
 
     fclose(fp);
 
+    notify("stop");
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <string>
 #include <string.h>
 #include <libsocket/inetclientstream.hpp>
+#include <unistd.h>
 
 using namespace std;
 
@@ -17,13 +18,19 @@ void read_file(string filename, stringstream &buffer){
   }
 }
 
+void notify(const string& msg) {
+  try {
+    libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
+    sock << msg;
+  } catch (...) {
+    // standalone usage
+  }
+}
+
 int main() {
-    try {
-      libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
-      sock << "C++ gason";
-    } catch (...) {
-      // standalone usage
-    }
+    stringstream ostr;
+    ostr << "C++ gason\t" << getpid();
+    notify(ostr.str());
 
     stringstream ss;
     read_file("./1.json", ss);
@@ -56,5 +63,6 @@ int main() {
     cout << y / len << endl;
     cout << z / len << endl;
 
+    notify("stop");
     return 0;
 }

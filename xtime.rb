@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require "mkmf"
 require "socket"
 
 $page_size = `getconf PAGESIZE`.to_i
@@ -10,20 +9,22 @@ def mem(pid)
 end
 
 class EnergyStats
+  PATH = "/sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj"
+
   attr_reader :has_energy_metrics
 
   def initialize
     @acc_e = 0
     @e = 0
-    @has_energy_metrics = find_executable 'rapl-info'
+    @has_energy_metrics = File.file?(PATH)
     if @has_energy_metrics
-      @max_e = IO.read("/sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj").to_i
+      @max_e = IO.read(PATH).to_i
     end
   end
 
   def update
     if @has_energy_metrics
-      new_e = IO.read("/sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj").to_i
+      new_e = IO.read(PATH).to_i
       if @e == 0
         # first reading
         @acc_e = 0
