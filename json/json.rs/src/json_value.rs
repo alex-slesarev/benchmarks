@@ -7,13 +7,16 @@ use serde_json::Value;
 use std::fs::File;
 use std::str;
 
-fn main() {
-    {
-        use std::io::Write;
-        if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
-            stream.write_all(b"Rust Serde Untyped").unwrap();
-        }
+fn notify(msg: &str) {
+    use std::io::Write;
+
+    if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
+        stream.write_all(msg.as_bytes()).unwrap();
     }
+}
+
+fn main() {
+    notify(&format!("Rust Serde Untyped\t{}", std::process::id()));
 
     let file = File::open("1.json").unwrap();
     let mmap = unsafe { Mmap::map(&file).unwrap() };
@@ -37,4 +40,6 @@ fn main() {
     println!("{}", x / len);
     println!("{}", y / len);
     println!("{}", z / len);
+
+    notify("stop");
 }

@@ -83,9 +83,15 @@ defmodule Benchmark do
   end
 end
 
-with {:ok, socket} <- :gen_tcp.connect('localhost', 9001, []) do
-   :gen_tcp.send(socket, "Elixir")
-   :gen_tcp.close(socket)
+notify = fn (msg) ->
+  with {:ok, socket} <- :gen_tcp.connect('localhost', 9001, []) do
+    :gen_tcp.send(socket, msg)
+    :gen_tcp.close(socket)
+  end
 end
 
+notify.("Elixir\t#{System.pid()}")
+
 Benchmark.run()
+
+notify.("stop")

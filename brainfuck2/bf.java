@@ -115,6 +115,15 @@ public final class bf {
         }
     }
 
+    private static void notify(final String msg) {
+        try (var socket = new java.net.Socket("localhost", 9001);
+             var out = socket.getOutputStream()) {
+            out.write(msg.getBytes("UTF-8"));
+        } catch (java.io.IOException e) {
+            // standalone usage
+        }
+    }
+
     public static void main( final String[] args ) throws IOException {
         final byte[] code = Files.readAllBytes( Paths.get( args[0] ) );
 
@@ -124,17 +133,13 @@ public final class bf {
         System.err.println("time: " + (System.currentTimeMillis()-start_time)/1e3+"s");
 
         System.err.println("run");
-
-        try (var socket = new java.net.Socket("localhost", 9001);
-             var out = socket.getOutputStream()) {
-            out.write("Java".getBytes("UTF-8"));
-        } catch (java.io.IOException e) {
-            // standalone usage
-        }
+        notify("Java\t" + ProcessHandle.current().pid());
 
         start_time = System.currentTimeMillis();
         final Program program = new Program(new String(code));
         program.run();
         System.err.println("time: " + (System.currentTimeMillis()-start_time)/1e3+"s");
+
+        notify("stop");
     }
 }

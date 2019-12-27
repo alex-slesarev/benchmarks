@@ -70,12 +70,16 @@ impl Program {
   }
 }
 
-fn main() {
-    {
-        if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
-            stream.write_all(b"Rust").unwrap();
-        }
+fn notify(msg: &str) {
+    use std::io::Write;
+
+    if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
+        stream.write_all(msg.as_bytes()).unwrap();
     }
+}
+
+fn main() {
+    notify(&format!("Rust\t{}", std::process::id()));
 
     let arg1 = env::args().nth(1).unwrap();
     let path = Path::new(&arg1);
@@ -83,4 +87,6 @@ fn main() {
     let mut file = File::open(&path).unwrap();
     file.read_to_string(&mut s).unwrap();
     Program::new(s).run()
+
+    notify("stop");
 }

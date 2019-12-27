@@ -49,6 +49,17 @@ namespace Test
             Console.WriteLine("time: {0}s", sw.Elapsed.TotalSeconds);
         }
 
+        private static void Notify(string msg) {
+            try {
+                using (var s = new System.Net.Sockets.TcpClient("localhost", 9001)) {
+                    var data = System.Text.Encoding.UTF8.GetBytes(msg);
+                    s.Client.Send(data);
+                }
+            } catch {
+                // standalone usage
+            }
+        }
+
         static void Main(string[] args)
         {
             for (int i = 0; i < 4; i++)
@@ -56,15 +67,10 @@ namespace Test
                 ParseJson();
             }
 
-            try {
-                using (var s = new System.Net.Sockets.TcpClient("localhost", 9001)) {
-                    var data = System.Text.Encoding.UTF8.GetBytes("C# System.Text.Json");
-                    s.Client.Send(data);
-                }
-            } catch {
-                // standalone usage
-            }
+            Notify($"C# System.Text.Json\t{Process.GetCurrentProcess().Id}");
+
             ParseJson();
-        }
+
+            Notify("stop");}
     }
 }

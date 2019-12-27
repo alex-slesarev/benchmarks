@@ -48,7 +48,7 @@ server = TCPServer.new 9001
 Process.spawn(*ARGV.to_a)
 
 client = server.accept
-test_data = client.gets.strip.split
+test_data = client.gets.strip.split("\t")
 test_name = test_data[0]
 pid = test_data[1].to_i
 puts test_name

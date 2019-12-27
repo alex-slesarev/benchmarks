@@ -70,13 +70,16 @@ where
     deserializer.deserialize_seq(StateVisitor)
 }
 
-fn main() {
-    {
-        use std::io::Write;
-        if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
-            stream.write_all(b"Rust Serde custom").unwrap();
-        }
+fn notify(msg: &str) {
+    use std::io::Write;
+
+    if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
+        stream.write_all(msg.as_bytes()).unwrap();
     }
+}
+
+fn main() {
+    notify(&format!("Rust Serde Custom\t{}", std::process::id()));
 
     let file = File::open("1.json").unwrap();
     let mmap = unsafe { Mmap::map(&file).unwrap() };
@@ -88,4 +91,6 @@ fn main() {
     println!("{}", test.state.x / len);
     println!("{}", test.state.y / len);
     println!("{}", test.state.z / len);
+
+    notify("stop");
 }

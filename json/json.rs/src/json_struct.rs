@@ -21,14 +21,16 @@ pub struct TestStruct {
     coordinates: Vec<Coordinate>,
 }
 
-fn main() {
-    {
-        use std::io::Write;
-        if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
-            stream.write_all(b"Rust Serde typed").unwrap();
-        }
+fn notify(msg: &str) {
+    use std::io::Write;
+
+    if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
+        stream.write_all(msg.as_bytes()).unwrap();
     }
-    std::net::TcpStream::connect("localhost:9001").unwrap();
+}
+
+fn main() {
+    notify(&format!("Rust Serde Typed\t{}", std::process::id()));
 
     let file = File::open("1.json").unwrap();
     let mmap = unsafe { Mmap::map(&file).unwrap() };
@@ -50,4 +52,6 @@ fn main() {
     println!("{}", x / len);
     println!("{}", y / len);
     println!("{}", z / len);
+
+    notify("stop");
 }

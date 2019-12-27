@@ -11,12 +11,17 @@ object JsonTest {
     y: Double,
     z: Double)
 
+  def notify(msg: String): Unit = {
+    scala.util.Using((new java.net.Socket("localhost", 9001)).getOutputStream()) {
+        _.write(msg.getBytes())
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     1 to 4 foreach (_ => parseJson())
-    scala.util.Using((new java.net.Socket("localhost", 9001)).getOutputStream()) {
-        _.write("Scala".getBytes())
-    }
+    notify(s"Scala\t${ProcessHandle.current().pid()}")
     parseJson()
+    notify("stop")
   }
 
   private def parseJson(): Unit = {
