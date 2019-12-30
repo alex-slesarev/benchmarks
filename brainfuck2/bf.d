@@ -5,6 +5,8 @@ import std.stdio : write, stdout;
 import std.traits : EnumMembers;
 import std.socket;
 import std.compiler;
+import std.format;
+import core.thread.osthread;
 
 // for compatability with older versions of the standard library
 static if (__VERSION__ < 2068)
@@ -12,18 +14,24 @@ static if (__VERSION__ < 2068)
 else
     import std.meta : Erase;
 
-void main(string[] args)
-{
+void notify(string msg) {
     try {
         auto socket = new TcpSocket(new InternetAddress("localhost", 9001));
         scope(exit) socket.close();
-        socket.send(name);
+        socket.send(msg);
     } catch (SocketOSException) {
         // standalone usage
     }
+}
+
+void main(string[] args)
+{
+    notify("%s\t%d".format(name, getpid()));
 
     string text = readText(args[1]);
     Program(text).run();
+
+    notify("stop");
 }
 
 struct Op

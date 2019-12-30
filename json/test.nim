@@ -1,16 +1,21 @@
 import json
 import net
+import strformat
+import posix
 
-try:
-  var socket = newSocket()
-  defer: socket.close()
-  socket.connect("localhost", Port(9001))
-  when defined(gcc):
-    socket.send("Nim GCC")
-  else:
-    socket.send("Nim Clang")
-except:
-  discard
+proc notify(msg: string) =
+  try:
+    var socket = newSocket()
+    defer: socket.close()
+    socket.connect("localhost", Port(9001))
+    socket.send(msg)
+  except:
+    discard
+
+var compiler = "Nim Clang"
+when defined(gcc):
+  compiler = "Nim GCC"
+notify(&"{compiler}\t{getpid()}")
 
 let jobj = parseFile("1.json")
 
@@ -28,3 +33,5 @@ for coord in coordinates:
 echo x / len
 echo y / len
 echo z / len
+
+notify("stop")

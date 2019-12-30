@@ -1,10 +1,14 @@
 import json
 import platform
 import socket
+import os
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    if not s.connect_ex(("localhost", 9001)):
-        s.sendall(bytes(platform.python_implementation(), 'utf8'))
+def notify(msg):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        if not s.connect_ex(("localhost", 9001)):
+            s.sendall(bytes(msg, 'utf8'))
+
+notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
 
 text = open('./1.json', 'r').read()
 jobj = json.loads(text)
@@ -21,3 +25,5 @@ for coord in jobj['coordinates']:
 print(x / len)
 print(y / len)
 print(z / len)
+
+notify("stop")

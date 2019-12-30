@@ -15,12 +15,16 @@ type TestStruct struct {
 	Coordinates []Coordinate
 }
 
-func main() {
+func notify(msg string) {
 	conn, err := net.Dial("tcp", "localhost:9001")
 	if err == nil {
-		fmt.Fprintf(conn, "Go jsoniter")
+		fmt.Fprintf(conn, msg)
 		conn.Close()
 	}
+}
+
+func main() {
+	notify(fmt.Sprintf("Go jsoniter\t%d", os.Getpid()))
 
 	// Add jsoniter
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -45,4 +49,6 @@ func main() {
 
 	len := float64(len(jobj.Coordinates))
 	fmt.Printf("%.8f\n%.8f\n%.8f\n", x/len, y/len, z/len)
+
+	notify("stop")
 }

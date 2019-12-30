@@ -4,11 +4,17 @@ use File::Slurper 'read_binary';
 use Cpanel::JSON::XS 'decode_json';
 use Socket;
 
-socket(my $socket, PF_INET, SOCK_STREAM,(getprotobyname('tcp'))[2]);
-if (connect($socket, pack_sockaddr_in(9001, inet_aton('localhost')))) {
-  print $socket "Perl Cpanel::JSON::XS";
+sub notify {
+    my $msg = shift;
+    socket(my $socket, Socket::PF_INET, Socket::SOCK_STREAM, (getprotobyname('tcp'))[2]);
+    if (connect($socket, Socket::pack_sockaddr_in(9001, Socket::inet_aton('localhost')))) {
+        print $socket $msg;
+    }
+    close($socket);
 }
-close($socket);
+
+my $pid = $$;
+notify("Perl Cpanel::JSON::XS\t${pid}");
 
 my $jobj = decode_json read_binary '1.json';
 my $coordinates = $jobj->{coordinates};
@@ -24,3 +30,5 @@ foreach my $coord (@$coordinates) {
 print $x / $len, "\n";
 print $y / $len, "\n";
 print $z / $len, "\n";
+
+notify("stop");

@@ -6,18 +6,24 @@ import core.stdc.stdio;
 import fast.json;
 import std.socket;
 import std.compiler;
+import std.format;
+import core.thread.osthread;
 
 struct Coord { double x, y, z; }
 
-void main()
-{
+void notify(string msg) {
     try {
         auto socket = new TcpSocket(new InternetAddress("localhost", 9001));
         scope(exit) socket.close();
-        socket.send("GDC fast");
+        socket.send(msg);
     } catch (SocketOSException) {
         // standalone usage
     }
+}
+
+void main()
+{
+    notify("GDC fast\t%d".format(getpid()));
 
     double x = 0, y = 0, z = 0;
 
@@ -33,4 +39,6 @@ void main()
 
     auto len = coords.length;
     printf("%.8f\n%.8f\n%.8f\n", x / len, y / len, z / len);
+
+    notify("stop");
 }

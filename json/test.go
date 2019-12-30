@@ -16,12 +16,16 @@ type TestStruct struct {
 	Coordinates []Coordinate
 }
 
-func main() {
+func notify(msg string) {
 	conn, err := net.Dial("tcp", "localhost:9001")
 	if err == nil {
-		fmt.Fprintf(conn, runtime.Compiler)
+		fmt.Fprintf(conn, msg)
 		conn.Close()
 	}
+}
+
+func main() {
+	notify(fmt.Sprintf("%s\t%d", runtime.Compiler, os.Getpid()))
 
 	f, err := os.Open("./1.json")
 	if err != nil {
@@ -44,4 +48,6 @@ func main() {
 
 	len := float64(len(jobj.Coordinates))
 	fmt.Printf("%.8f\n%.8f\n%.8f\n", x/len, y/len, z/len)
+
+	notify("stop")
 }
