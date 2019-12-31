@@ -4,7 +4,7 @@ import std.file;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 void notify(string msg) {
     try {

@@ -5,7 +5,7 @@ import std.numeric, std.stdio, std.string, std.conv;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 double[][] matGen(in int n) {
   auto len = n * n;

@@ -12,20 +12,20 @@ struct Coordinates {
 	coordinates []Coordinate
 }
 
-fn notify() {
+fn notify(msg string) {
     sock := net.dial('127.0.0.1', 9001) or {
         return
     }
-    mut lang := "V GCC"
-    $if clang {
-      lang = "V Clang"
-    }
-    sock.write(lang) or {}
+    sock.write(msg) or {}
     sock.close() or {}
 }
 
 fn main() {
-	notify()
+    mut lang := "V GCC"
+    $if clang {
+      lang = "V Clang"
+    }
+    notify('${lang}\t${C.getpid()}')
 
 	s := os.read_file("./1.json") or {
 		eprintln('Failed to open file 1.json')
@@ -53,4 +53,6 @@ fn main() {
 	z /= len
 
 	println('$x\n$y\n$z')
+
+    notify("stop")
 }

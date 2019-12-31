@@ -6,7 +6,7 @@ import std.conv;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 class Tape {
   int pos;

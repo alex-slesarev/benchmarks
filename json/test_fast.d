@@ -7,7 +7,7 @@ import fast.json;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 struct Coord { double x, y, z; }
 

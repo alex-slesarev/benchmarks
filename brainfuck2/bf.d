@@ -6,7 +6,7 @@ import std.traits : EnumMembers;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 // for compatability with older versions of the standard library
 static if (__VERSION__ < 2068)
@@ -26,9 +26,10 @@ void notify(string msg) {
 
 void main(string[] args)
 {
+    string text = readText(args[1]);
+
     notify("%s\t%d".format(name, getpid()));
 
-    string text = readText(args[1]);
     Program(text).run();
 
     notify("stop");

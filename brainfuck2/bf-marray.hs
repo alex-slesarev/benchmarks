@@ -77,11 +77,14 @@ notify msg = do
       send socket $ C.pack msg
 
 main = do
-    pid <- getProcessID
-    notify $ "Haskell MArray\t" ++ show pid
     [filename] <- getArgs
     source <- readFile filename
+
+    pid <- getProcessID
+    notify $ "Haskell MArray\t" ++ show pid
+
     let (_, ops) = parse (source, [])
     empty <- MArray.newListArray (0, 0) [0]
     run ops $ Tape empty 0
+
     notify "stop"

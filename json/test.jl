@@ -30,12 +30,18 @@ for i in 1:4
   test()
 end
 
-try
-  socket = connect("localhost", 9001)
-  write(socket, "Julia")
-  close(socket)
-catch
-  # standalone usage
+function notify(msg)
+  try
+    socket = connect("localhost", 9001)
+    write(socket, msg)
+    close(socket)
+  catch
+    # standalone usage
+  end
 end
 
+notify("Julia\t$(getpid())")
+
 test()
+
+notify("stop")

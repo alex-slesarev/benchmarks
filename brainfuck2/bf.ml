@@ -75,10 +75,11 @@ let notify msg =
 let main =
   match Sys.argv with
   | [| _; filename |] ->
+    let source = read_file filename in
+
     let pid = Unix.getpid() in
     notify(Printf.sprintf "OCaml\t%d" pid);
 
-    let source = read_file filename in
     let (_, ops) = parse(source, []) in
     ignore(run ops { data = [| 0 |]; pos = 0 });
 

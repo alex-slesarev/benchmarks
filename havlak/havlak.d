@@ -5,7 +5,7 @@ import std.stdio;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 final:
 

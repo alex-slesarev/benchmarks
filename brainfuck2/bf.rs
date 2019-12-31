@@ -83,13 +83,14 @@ fn main() {
     use std::env;
     use std::io::Read;
 
-    notify(&format!("Rust\t{}", std::process::id()));
-
     let arg1 = env::args().nth(1).unwrap();
     let path = Path::new(&arg1);
     let mut s = String::new();
     let mut file = File::open(&path).unwrap();
     file.read_to_string(&mut s).unwrap();
+
+    notify(&format!("Rust\t{}", std::process::id()));
+
     let program = Program::new(s);
     program.run();
 

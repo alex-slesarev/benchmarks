@@ -76,11 +76,13 @@ proc notify(msg: string) =
 
 import os
 
+var text = paramStr(1).readFile()
+
 var compiler = "Nim Clang"
 when defined(gcc):
   compiler = "Nim GCC"
 notify(&"{compiler}\t{getpid()}")
 
-paramStr(1).readFile().parse().run()
+text.parse().run()
 
 notify("stop")

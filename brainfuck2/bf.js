@@ -73,8 +73,7 @@ var Brainfuck = function(text) {
   };
 }
 
-function main() {
-    var text = require('fs').readFileSync(process.argv[2].toString()).toString();
+function main(text) {
     var brainfuck = new Brainfuck(text);
     brainfuck.run();
 }
@@ -91,7 +90,9 @@ function notify(msg) {
 }
 
 (async function() {
+    var text = require('fs').readFileSync(process.argv[2].toString()).toString();
+
     await notify(`Node.js\t${require('process').pid}`);
-    main();
+    main(text);
     await notify('stop');
 })();

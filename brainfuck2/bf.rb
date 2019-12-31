@@ -89,9 +89,12 @@ if engine == "truffleruby"
     engine = "TruffleRuby JVM"
   end
 end
+
+text = File.read(ARGV[0])
+
 pid = Process.pid
 notify("#{engine}\t#{pid}")
 
-Program.new(File.read(ARGV[0])).run
+Program.new(text).run
 
 notify("stop")

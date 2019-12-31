@@ -6,7 +6,7 @@ import std.range;
 import std.stdio;
 import std.socket;
 import std.compiler;
-import core.thread.osthread;
+import core.thread;
 
 enum STR_SIZE = 131072;
 enum TRIES = 8192;

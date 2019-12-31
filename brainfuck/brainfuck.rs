@@ -71,8 +71,6 @@ impl Program {
 }
 
 fn notify(msg: &str) {
-    use std::io::Write;
-
     if let Ok(mut stream) = std::net::TcpStream::connect("localhost:9001") {
         stream.write_all(msg.as_bytes()).unwrap();
     }
@@ -86,7 +84,7 @@ fn main() {
     let mut s = String::new();
     let mut file = File::open(&path).unwrap();
     file.read_to_string(&mut s).unwrap();
-    Program::new(s).run()
+    Program::new(s).run();
 
     notify("stop");
 }

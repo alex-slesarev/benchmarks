@@ -18,6 +18,7 @@ instance J.FromJSON Coordinate
 
 data Res = Res !Double !Double !Double !Int
 
+notify :: String -> IO ()
 notify msg = do
     connect "localhost" "9001" $ \(socket, _) -> do
       send socket $ C.pack msg

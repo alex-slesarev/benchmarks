@@ -85,9 +85,11 @@ def notify(msg)
   end
 end
 
+text = File.read(ARGV[0])
+
 pid = Process.pid
 notify("Crystal\t#{pid}")
 
-Program.new(File.read(ARGV[0])).run
+Program.new(text).run
 
 notify("stop")

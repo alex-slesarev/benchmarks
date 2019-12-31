@@ -74,9 +74,8 @@ def notify(msg):
         if not s.connect_ex(("localhost", 9001)):
             s.sendall(bytes(msg, 'utf8'))
 
-notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
-
 text = open(sys.argv[1], 'r').read()
-Program(text).run()
 
+notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
+Program(text).run()
 notify("stop")

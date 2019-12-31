@@ -116,13 +116,15 @@ sub notify {
     close($socket);
 }
 
-my $pid = $$;
-notify("Perl\t${pid}");
-
 open (FH, "<", shift) or die $!;
 undef $/;
 $| = 1;
-my ($parsed, $n) = parse([split //, <FH>]);
+my $text = [split //, <FH>];
+
+my $pid = $$;
+notify("Perl\t${pid}");
+
+my ($parsed, $n) = parse($text);
 my $tape = Tape->new();
 run($parsed, $tape);
 

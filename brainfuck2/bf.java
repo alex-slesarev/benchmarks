@@ -125,7 +125,7 @@ public final class bf {
     }
 
     public static void main( final String[] args ) throws IOException {
-        final byte[] code = Files.readAllBytes( Paths.get( args[0] ) );
+        final String code = new String(Files.readAllBytes( Paths.get( args[0] ) ));
 
         long start_time = System.currentTimeMillis();
         System.err.println("JIT warming up");
@@ -136,7 +136,7 @@ public final class bf {
         notify("Java\t" + ProcessHandle.current().pid());
 
         start_time = System.currentTimeMillis();
-        final Program program = new Program(new String(code));
+        final Program program = new Program(code);
         program.run();
         System.err.println("time: " + (System.currentTimeMillis()-start_time)/1e3+"s");
 

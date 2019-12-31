@@ -1,9 +1,15 @@
 <?php
-$socket = @fsockopen('localhost', 9001);
-if ($socket) {
-   fputs($socket, 'PHP');
-   fclose($socket);
+
+function notify($msg) {
+    $socket = @fsockopen('localhost', 9001);
+    if ($socket) {
+        fputs($socket, $msg);
+        fclose($socket);
+    }
 }
+
+$pid = posix_getpid();
+notify("PHP\t$pid");
 
 $jobj = json_decode(file_get_contents("./1.json"), true);
 
@@ -24,3 +30,4 @@ printf("%.8f\n", $x / $len);
 printf("%.8f\n", $y / $len);
 printf("%.8f\n", $z / $len);
 
+notify("stop");

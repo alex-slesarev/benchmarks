@@ -13,10 +13,15 @@
 
 (dotimes [i 4] (parse))
 
-(try
-  (with-open [sock (java.net.Socket. "localhost" 9001)
-              printer (java.io.PrintWriter. (.getOutputStream sock))]
-    (.println printer "Clojure"))
-  (catch java.io.IOException e ()))
+(defn notify [msg]
+  (try
+    (with-open [sock (java.net.Socket. "localhost" 9001)
+                printer (java.io.PrintWriter. (.getOutputStream sock))]
+      (.println printer msg))
+    (catch java.io.IOException e ())))
+
+(notify (format "Clojure\t%d" (.pid (java.lang.ProcessHandle/current))))
 
 (parse)
+
+(notify "stop")

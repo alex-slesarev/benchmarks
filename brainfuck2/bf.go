@@ -143,12 +143,12 @@ func notify(msg string) {
 }
 
 func main() {
-	notify(fmt.Sprintf("%s\t%d", runtime.Compiler, os.Getpid()))
-
 	Code, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {
 		panic(fmt.Sprintf("%v", err))
 	}
+
+	notify(fmt.Sprintf("%s\t%d", runtime.Compiler, os.Getpid()))
 
 	NewProgram(string(Code)).Run()
 

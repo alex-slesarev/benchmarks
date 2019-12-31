@@ -104,11 +104,12 @@ void notify(const string& msg) {
 }
 
 int main(int argc, char** argv) {
+  string text = read_file(string(argv[1]));
+
   stringstream ostr;
   ostr << "C++\t" << getpid();
   notify(ostr.str());
 
-  string text = read_file(string(argv[1]));
   Program p(text);
   p.run();
 

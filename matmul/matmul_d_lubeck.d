@@ -10,7 +10,7 @@ import lubeck: mtimes;
 import std.socket;
 import std.compiler;
 import std.format;
-import core.thread.osthread;
+import core.thread;
 
 alias Matrix = Slice!(double*, 2);
 

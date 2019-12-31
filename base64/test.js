@@ -6,14 +6,15 @@ const TRIES = 8192;
 const b = Buffer.from("a".repeat(STR_SIZE));
 
 function main() {
+    var s = 0;
+    var start = new Date();
+
     var str2 = b.toString('base64');
     process.stdout.write(
         util.format("encode %s... to %s...: ",
 		    b.toString('utf8', 0, 4),
 		    str2.substring(0, 4)));
 
-    var s = 0;
-    var start = new Date();
     for (var i = 0; i < TRIES; i++) {
         str2 = b.toString('base64');
         s += str2.length;

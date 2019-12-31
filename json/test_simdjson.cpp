@@ -6,7 +6,7 @@
 
 using namespace simdjson;
 
-void notify(const string& msg) {
+void notify(const std::string& msg) {
   try {
     libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
     sock << msg;
@@ -16,7 +16,7 @@ void notify(const string& msg) {
 }
 
 int main(int argc, char *argv[]) {
-  stringstream ostr;
+  std::stringstream ostr;
   ostr << "C++ simdjson\t" << getpid();
   notify(ostr.str());
 

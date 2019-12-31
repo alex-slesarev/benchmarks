@@ -372,6 +372,7 @@ For Java, Scala:
 For Lua:
 
  - [LuaSocket](http://w3.impa.br/~diego/software/luasocket/) for TCP connectivity between the tests and the test runner (Debian package `lua-socket`)
+ - [luaposix](http://luaposix.github.io/luaposix/) for getting PID of the tests (Debian package `lua-posix`)
 
 For Haskell:
 
