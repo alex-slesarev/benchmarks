@@ -89,13 +89,6 @@ println("JIT warming up")
 main(">++[<+++++++++++++>-]<[[>+>+<<-]>[<+>-]++++++++[>++++++++<-]>[-]<<>++++++++++[>++++++++++[>++++++++++[>++++++++++[>++++++++++[>++++++++++[>++++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++")
 
 println("bench")
-try
-  socket = connect("localhost", 9001)
-  write(socket, "Julia")
-  close(socket)
-catch
-  # standalone usage
-end
 
 text = open(ARGS[1]) do file
   read(file, String)

@@ -67,7 +67,7 @@ proc notify msg {
 
 lassign $argv filename
 set f [open $filename]
-lassign [split [read $f] {}] text
+set text [split [read $f] {}]
 close $f
 
 notify [format "%s\t%d" "Tcl (FP)" [pid]]

@@ -71,6 +71,7 @@ namespace Test
 
             ParseJson();
 
-            Notify("stop");}
+            Notify("stop");
+        }
     }
 }

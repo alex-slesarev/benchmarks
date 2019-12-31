@@ -1,9 +1,6 @@
-extern crate base64;
-extern crate time;
-
 use base64::{decode, encode};
 use std::str;
-use time::precise_time_ns;
+use std::time::Instant;
 
 const STR_SIZE: usize = 131_072;
 const TRIES: usize = 8192;
@@ -20,7 +17,7 @@ fn main() {
     let input = vec![b'a'; STR_SIZE];
 
     notify(&format!("Rust\t{}", std::process::id()));
-    let mut time_start = precise_time_ns();
+    let mut time_start = Instant::now();
     let mut sum = 0;
 
     let mut output = encode(&input);
@@ -34,11 +31,7 @@ fn main() {
         output = encode(&input);
         sum += output.len();
     }
-    println!(
-        "{}, {}",
-        sum,
-        ((precise_time_ns() - time_start) as f64) / 1e9
-    );
+    println!("{}, {}", sum, time_start.elapsed().as_secs_f32());
 
     let mut str3 = decode(&output).unwrap();
     print!(
@@ -47,16 +40,12 @@ fn main() {
         str::from_utf8(&str3[..4]).unwrap()
     );
     sum = 0;
-    time_start = precise_time_ns();
+    time_start = Instant::now();
     for _ in 0..TRIES {
         str3 = decode(&output).unwrap();
         sum += str3.len();
     }
-    println!(
-        "{}, {}",
-        sum,
-        ((precise_time_ns() - time_start) as f64) / 1e9
-    );
+    println!("{}, {}", sum, time_start.elapsed().as_secs_f32());
 
     notify("stop");
 }
