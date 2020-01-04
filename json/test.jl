@@ -1,11 +1,10 @@
-import JSON
+import JSON3
 using Sockets
 
 function main()
-  text = open("1.json") do file
-    read(file, String)
+  jobj = open("1.json") do file
+    JSON3.read(file)
   end
-  jobj = JSON.parse(text)
   coordinates = jobj["coordinates"]
   len = length(coordinates)
   x = y = z = 0
@@ -40,7 +39,7 @@ function notify(msg)
   end
 end
 
-notify("Julia\t$(getpid())")
+notify("Julia JSON3\t$(getpid())")
 
 test()
 
