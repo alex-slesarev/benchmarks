@@ -17,7 +17,7 @@ object JsonTest {
   }
 
   def main(args: Array[String]): Unit = {
-    val bytes = Files.readAllBytes(Paths.get("1.json"))
+    val bytes = Files.readAllBytes(Paths.get("/tmp/1.json"))
 
     1 to 4 foreach (_ => parseJson(bytes))
     notify(s"Scala\t${ProcessHandle.current().pid()}")

@@ -44,7 +44,7 @@ public class TestJava {
     }
 
     public static void main(String[] args) throws IOException {
-        var bytes = Files.readAllBytes(Paths.get("1.json"));
+        var bytes = Files.readAllBytes(Paths.get("/tmp/1.json"));
         // JIT warming up
         for(int i = 0; i < 4; i++) {
             parse(bytes);

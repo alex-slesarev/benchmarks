@@ -21,7 +21,7 @@ if engine == "truffleruby"
   end
 end
 
-text = IO.read('1.json')
+text = IO.read('/tmp/1.json')
 
 pid = Process.pid
 notify("#{engine}\t#{pid}")

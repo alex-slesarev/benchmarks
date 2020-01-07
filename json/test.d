@@ -17,7 +17,7 @@ void notify(string msg) {
 }
 
 int main(string[] args) {
-  string text = readText("./1.json");
+  string text = readText("/tmp/1.json");
 
   notify("%s\t%d".format(name, getpid()));
 

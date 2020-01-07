@@ -27,7 +27,7 @@ func notify(msg string) {
 }
 
 func main() {
-	bytes, err := ioutil.ReadFile("./1.json")
+	bytes, err := ioutil.ReadFile("/tmp/1.json")
 	if err != nil {
 		panic(fmt.Sprintf("%v", err))
 	}

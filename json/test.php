@@ -8,7 +8,7 @@ function notify($msg) {
     }
 }
 
-$text = file_get_contents("./1.json");
+$text = file_get_contents("/tmp/1.json");
 
 $pid = posix_getpid();
 notify("PHP\t$pid");

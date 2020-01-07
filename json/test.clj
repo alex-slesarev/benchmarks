@@ -18,7 +18,7 @@
       (.println printer msg))
     (catch java.io.IOException e ())))
 
-(let [text (slurp "1.json")]
+(let [text (slurp "/tmp/1.json")]
   (dotimes [i 4] (parse text))
 
   (notify (format "Clojure\t%d" (.pid (java.lang.ProcessHandle/current))))

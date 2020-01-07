@@ -20,7 +20,7 @@ void notify(string msg) {
 
 void main()
 {
-    string text = readText("./1.json");
+    string text = readText("/tmp/1.json");
 
     notify("GDC fast\t%d".format(getpid()));
 

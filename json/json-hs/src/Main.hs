@@ -25,7 +25,7 @@ notify msg = do
 
 main :: IO ()
 main = do
-    f <- BL.readFile "1.json"
+    f <- BL.readFile "/tmp/1.json"
     pid <- getProcessID
     notify $ "Haskell\t" ++ show pid
     let Res xsum ysum zsum count = foldl' op  (Res 0 0 0 0)

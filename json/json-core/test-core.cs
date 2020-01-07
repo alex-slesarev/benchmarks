@@ -61,7 +61,7 @@ namespace Test
 
         static void Main(string[] args)
         {
-            var text = File.ReadAllText("./1.json");
+            var text = File.ReadAllText("/tmp/1.json");
             for (int i = 0; i < 4; i++)
             {
                 ParseJson(text);

@@ -21,7 +21,7 @@ fn notify(msg string) {
 }
 
 fn main() {
-	s := os.read_file('./1.json') or {
+	s := os.read_file('/tmp/1.json') or {
 		eprintln('Failed to open file 1.json')
 		return
 	}

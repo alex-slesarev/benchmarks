@@ -14,7 +14,7 @@ class CoordinateHandler : public BaseReaderHandler<UTF8<>, CoordinateHandler> {
 public:
   CoordinateHandler() : state_(kStart), x_(), y_(), z_() {}
 
-  bool Double(double d) { 
+  bool Double(double d) {
     switch (state_) {
       case kX: x_ += d; state_ = kCoordinatesElement; break;
       case kY: y_ += d; state_ = kCoordinatesElement; break;
@@ -33,7 +33,7 @@ public:
     return true;
   }
 
-  bool Key(const Ch* str, SizeType len, bool copy) { 
+  bool Key(const Ch* str, SizeType len, bool copy) {
     switch (state_) {
       case kRoot:
         if (len == sizeof("coordinates") - 1 && memcmp(str, "coordinates", sizeof("coordinates") - 1) == 0)
@@ -112,7 +112,7 @@ void notify(const string& msg) {
 
 int main() {
     stringstream ss;
-    read_file("./1.json", ss);
+    read_file("/tmp/1.json", ss);
 
     stringstream ostr;
     ostr << "C++ RapidJSON SAX\t" << getpid();

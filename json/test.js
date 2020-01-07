@@ -31,7 +31,7 @@ function notify(msg) {
 }
 
 (async function() {
-    const text = require('fs').readFileSync("./1.json", "utf8");
+    const text = require('fs').readFileSync("/tmp/1.json", "utf8");
     await notify(`Node.js\t${require('process').pid}`);
     main(text);
     await notify('stop');

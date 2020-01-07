@@ -27,14 +27,14 @@ void notify(const string& msg) {
 
 int main() {
     stringstream ss;
-    read_file("./1.json", ss);
+    read_file("/tmp/1.json", ss);
     string text = ss.str();
 
     stringstream ostr;
     ostr << "C++ RapidJSON\t" << getpid();
     notify(ostr.str());
 
-    Document jobj; 
+    Document jobj;
     jobj.Parse(text.c_str());
 
     const Value &coordinates = jobj["coordinates"];

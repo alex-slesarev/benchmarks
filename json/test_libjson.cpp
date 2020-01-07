@@ -27,7 +27,7 @@ void notify(const string& msg) {
 
 int main() {
   stringstream ss;
-  read_file("./1.json", ss);
+  read_file("/tmp/1.json", ss);
   string text = ss.str();
 
   stringstream ostr;

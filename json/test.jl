@@ -23,7 +23,7 @@ function test(text)
   println("Elapsed: $(x[2]), Allocated: $(x[3]), GC Time: $(x[4])")
 end
 
-text = open("1.json") do file
+text = open("/tmp/1.json") do file
   read(file, String)
 end
 

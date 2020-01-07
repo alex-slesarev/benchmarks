@@ -11,7 +11,7 @@ fn notify(msg: &str) {
 }
 
 fn main() {
-    let content = fs::read_to_string("1.json").unwrap();
+    let content = fs::read_to_string("/tmp/1.json").unwrap();
     let mut program = jq_rs::compile(".coordinates | length as $len | (map(.x) | add) / $len, (map(.y) | add) / $len, (map(.z) | add) / $len").unwrap();
 
     notify(&format!("Rust jq\t{}", std::process::id()));

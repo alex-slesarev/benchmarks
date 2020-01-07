@@ -30,7 +30,7 @@ void notify(const string& msg) {
 int main()
 {
   stringstream text;
-  read_file("./1.json", text);
+  read_file("/tmp/1.json", text);
 
   stringstream ostr;
   ostr << "C++ Boost\t" << getpid();

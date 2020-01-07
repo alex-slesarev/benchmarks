@@ -12,7 +12,7 @@ proc notify(msg: string) =
   except:
     discard
 
-var text = "1.json".readFile()
+var text = "/tmp/1.json".readFile()
 
 var compiler = "Nim Clang"
 when defined(gcc):

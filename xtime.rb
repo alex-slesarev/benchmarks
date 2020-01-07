@@ -2,10 +2,15 @@
 require "socket"
 
 $page_size = `getconf PAGESIZE`.to_i
+$has_mem = File.file?("/proc/self/statm")
 
 def mem(pid)
-  stat = IO.read("/proc/#{pid}/statm").split
-  $page_size * stat[1].to_i # man 5 proc
+  if $has_mem
+    stat = IO.read("/proc/#{pid}/statm").split
+    $page_size * stat[1].to_i # man 5 proc
+  else
+    0
+  end
 end
 
 class EnergyStats

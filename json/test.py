@@ -10,7 +10,7 @@ def notify(msg):
             s.sendall(bytes(msg, 'utf8'))
 
 
-text = Path('./1.json').read_text()
+text = Path('/tmp/1.json').read_text()
 
 notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
 

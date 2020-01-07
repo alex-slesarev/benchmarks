@@ -13,7 +13,7 @@ sub notify {
     close($socket);
 }
 
-my $bytes = read_binary '1.json';
+my $bytes = read_binary '/tmp/1.json';
 
 my $pid = $$;
 notify("Perl JSON::Tiny\t${pid}");

@@ -25,7 +25,7 @@ void notify(const std::string& msg) {
 
 int main(int argc, char *argv[]) {
   std::stringstream ss;
-  read_file("./1.json", ss);
+  read_file("/tmp/1.json", ss);
   std::string text = ss.str();
 
   std::stringstream ostr;
