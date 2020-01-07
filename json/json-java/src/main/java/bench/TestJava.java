@@ -3,6 +3,8 @@ package bench;
 import com.dslplatform.json.*;
 import java.io.*;
 import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class TestJava {
 
@@ -15,11 +17,10 @@ public class TestJava {
         public double x, y, z;
     }
 
-    public static void parse(String filename) throws IOException {
+    public static void parse(byte[] bytes) throws IOException {
         long start_time = System.currentTimeMillis();
-        FileInputStream fis = new FileInputStream(filename);
         DslJson<Object> json = new DslJson<Object>(new DslJson.Settings<Object>().includeServiceLoader().doublePrecision(JsonReader.DoublePrecision.LOW));
-        Root result = json.deserialize(Root.class, fis, new byte[65536]);
+        Root result = json.deserialize(Root.class, bytes, bytes.length);
         double x = 0, y = 0, z = 0;
         int total = result.coordinates.size();
         for (Model m : result.coordinates) {
@@ -43,14 +44,15 @@ public class TestJava {
     }
 
     public static void main(String[] args) throws IOException {
+        var bytes = Files.readAllBytes(Paths.get("1.json"));
         // JIT warming up
         for(int i = 0; i < 4; i++) {
-            parse("1.json");
+            parse(bytes);
         }
 
         notify("Java\t" + ProcessHandle.current().pid());
 
-        parse("1.json");
+        parse(bytes);
 
         notify("stop");
     }

@@ -1,5 +1,4 @@
-import java.io.FileInputStream
-
+import java.nio.file.{Files, Paths}
 import com.dslplatform.json._
 
 object JsonTest {
@@ -18,20 +17,21 @@ object JsonTest {
   }
 
   def main(args: Array[String]): Unit = {
-    1 to 4 foreach (_ => parseJson())
+    val bytes = Files.readAllBytes(Paths.get("1.json"))
+
+    1 to 4 foreach (_ => parseJson(bytes))
     notify(s"Scala\t${ProcessHandle.current().pid()}")
-    parseJson()
+    parseJson(bytes)
     notify("stop")
   }
 
-  private def parseJson(): Unit = {
+  private def parseJson(bytes: Array[Byte]): Unit = {
     val start_time = System.nanoTime
 
     val settings = new DslJson.Settings[Any]().doublePrecision(JsonReader.DoublePrecision.LOW).`with`(new ConfigureScala)
     implicit val dslJson = new DslJson[Any](settings)
 
-    val fs = new FileInputStream("1.json")
-    val root = dslJson.decode[Root](fs)
+    val root = dslJson.decode[Root](bytes)
 
     var (x, y, z) = (0.0, 0.0, 0.0)
 

@@ -2,6 +2,7 @@ import platform
 import sys
 import socket
 import os
+from pathlib import Path
 
 class Tape(object):
     def __init__(self):
@@ -68,8 +69,10 @@ def notify(msg):
         if not s.connect_ex(("localhost", 9001)):
             s.sendall(bytes(msg, 'utf8'))
 
+text = Path(sys.argv[1]).read_text()
+
 notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
 
-Program(open(sys.argv[1], 'r').read()).run()
+Program(text).run()
 
 notify("stop")

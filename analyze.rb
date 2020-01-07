@@ -29,9 +29,11 @@ name_repl = {
   "GNU D" => "GDC"
 }
 
-lines = File.readlines(RESULTS_LOG).map { |line|
-  values = line.split("\t")
-  Row.new(name_repl.fetch(values[0], values[0]), values[1], values[2], values[3].strip())
+lines = open(RESULTS_LOG) {|f|
+  f.readlines.map { |line|
+    values = line.split("\t")
+    Row.new(name_repl.fetch(values[0], values[0]), values[1], values[2], values[3].strip())
+  }
 }
 keys = lines.map {|row| row.name}.uniq
 

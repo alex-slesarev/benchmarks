@@ -1,5 +1,5 @@
-function main() {
-    var jobj = (JSON.parse(require('fs').readFileSync("./1.json", "utf8")));
+function main(text) {
+    var jobj = JSON.parse(text);
 
     var coordinates = jobj['coordinates'];
     var len = coordinates.length;
@@ -31,7 +31,8 @@ function notify(msg) {
 }
 
 (async function() {
+    const text = require('fs').readFileSync("./1.json", "utf8");
     await notify(`Node.js\t${require('process').pid}`);
-    main();
+    main(text);
     await notify('stop');
 })();

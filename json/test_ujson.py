@@ -2,10 +2,10 @@ import ujson as json
 import platform
 import socket
 import os
+from pathlib import Path
 
-def test_json():
-    with open('./1.json', 'r') as f:
-        jobj = json.loads(f.read())
+def test_json(text):
+    jobj = json.loads(text)
     l = len(jobj['coordinates'])
     x = 0
     y = 0
@@ -26,8 +26,10 @@ def notify(msg):
             s.sendall(bytes(msg, 'utf8'))
 
 if __name__ == '__main__':
+    text = Path('./1.json').read_text()
+
     notify("%s UltraJSON\t%d" % (platform.python_implementation(), os.getpid()))
 
-    test_json()
+    test_json(text)
 
     notify("stop")

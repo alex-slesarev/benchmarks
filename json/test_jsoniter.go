@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/json-iterator/go"
+	"io/ioutil"
 	"net"
 	"os"
+	"strings"
 )
 
 type Coordinate struct {
@@ -24,17 +26,20 @@ func notify(msg string) {
 }
 
 func main() {
+	bytes, err := ioutil.ReadFile("./1.json")
+	if err != nil {
+		panic(fmt.Sprintf("%v", err))
+	}
+	content := string(bytes)
+	reader := strings.NewReader(content)
+
 	notify(fmt.Sprintf("Go jsoniter\t%d", os.Getpid()))
 
 	// Add jsoniter
 	var json = jsoniter.ConfigCompatibleWithStandardLibrary
-	f, err := os.Open("./1.json")
-	if err != nil {
-		panic(err)
-	}
 
 	jobj := TestStruct{}
-	err = json.NewDecoder(f).Decode(&jobj)
+	err = json.NewDecoder(reader).Decode(&jobj)
 	if err != nil {
 		panic(err)
 	}

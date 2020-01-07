@@ -11,10 +11,11 @@ def notify(msg)
   end
 end
 
+text = File.read("1.json")
+
 pid = Process.pid
 notify("Crystal\t#{pid}")
 
-text = File.read("1.json")
 jobj = JSON.parse(text)
 coordinates = jobj["coordinates"].as_a
 len = coordinates.size

@@ -2,15 +2,18 @@ import json
 import platform
 import socket
 import os
+from pathlib import Path
 
 def notify(msg):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         if not s.connect_ex(("localhost", 9001)):
             s.sendall(bytes(msg, 'utf8'))
 
+
+text = Path('./1.json').read_text()
+
 notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
 
-text = open('./1.json', 'r').read()
 jobj = json.loads(text)
 len = len(jobj['coordinates'])
 x = 0

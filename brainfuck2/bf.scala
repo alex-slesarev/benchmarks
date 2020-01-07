@@ -69,7 +69,7 @@ object BrainFuck {
   }
 
   def main(args: Array[String]): Unit = {
-    val text = scala.io.Source.fromFile(args(0)).mkString
+    val text = scala.util.Using(scala.io.Source.fromFile(args(0))) { _.mkString }.get
 
     // JIT warming up
     System.err.print("JIT warming up\n")

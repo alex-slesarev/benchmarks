@@ -13,10 +13,12 @@ sub notify {
     close($socket);
 }
 
+my $bytes = read_binary '1.json';
+
 my $pid = $$;
 notify("Perl JSON::Tiny\t${pid}");
 
-my $jobj = decode_json read_binary '1.json';
+my $jobj = decode_json $bytes;
 my $coordinates = $jobj->{coordinates};
 my $len = @$coordinates;
 my $x = my $y = my $z = 0;

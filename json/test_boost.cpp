@@ -29,12 +29,12 @@ void notify(const string& msg) {
 
 int main()
 {
+  stringstream text;
+  read_file("./1.json", text);
+
   stringstream ostr;
   ostr << "C++ Boost\t" << getpid();
   notify(ostr.str());
-
-  stringstream text;
-  read_file("./1.json", text);
 
   boost::property_tree::ptree jobj;
   boost::property_tree::read_json(text, jobj);

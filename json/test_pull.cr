@@ -14,21 +14,21 @@ def notify(msg)
   end
 end
 
+text = File.read("1.json")
+
 pid = Process.pid
 notify("Crystal Pull\t#{pid}")
 
-File.open("1.json") do |file|
-  pull = JSON::PullParser.new(file)
-  pull.on_key!("coordinates") do
-    pull.read_array do
-      len += 1
-      pull.read_object do |key|
-        case key
-        when "x" then x += pull.read_float
-        when "y" then y += pull.read_float
-        when "z" then z += pull.read_float
-        else          pull.skip
-        end
+pull = JSON::PullParser.new(text)
+pull.on_key!("coordinates") do
+  pull.read_array do
+    len += 1
+    pull.read_object do |key|
+      case key
+      when "x" then x += pull.read_float
+      when "y" then y += pull.read_float
+      when "z" then z += pull.read_float
+      else          pull.skip
       end
     end
   end

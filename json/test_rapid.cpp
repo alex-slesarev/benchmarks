@@ -1,13 +1,20 @@
 #include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
 #include <cstdio>
 #include <iostream>
 #include <libsocket/inetclientstream.hpp>
 #include <sstream>
 #include <unistd.h>
+#include <fstream>
 
 using namespace std;
 using namespace rapidjson;
+
+void read_file(const string& filename, stringstream &buffer) {
+  ifstream f(filename);
+  if (f.good()) {
+    buffer << f.rdbuf();
+  }
+}
 
 void notify(const string& msg) {
   try {
@@ -19,15 +26,16 @@ void notify(const string& msg) {
 }
 
 int main() {
+    stringstream ss;
+    read_file("./1.json", ss);
+    string text = ss.str();
+
     stringstream ostr;
     ostr << "C++ RapidJSON\t" << getpid();
     notify(ostr.str());
 
-    FILE* fp = std::fopen("./1.json", "r");
-    char buffer[65536];
-    FileReadStream frs(fp, buffer, sizeof(buffer));
     Document jobj; 
-    jobj.ParseStream(frs);
+    jobj.Parse(text.c_str());
 
     const Value &coordinates = jobj["coordinates"];
     SizeType len = coordinates.Size();
@@ -43,8 +51,6 @@ int main() {
     std::cout << x / len << std::endl;
     std::cout << y / len << std::endl;
     std::cout << z / len << std::endl;
-
-    fclose(fp);
 
     notify("stop");
     return 0;

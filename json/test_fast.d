@@ -1,13 +1,10 @@
-// By default fast.json validates only portions of JSON that
-// are read out as a compromise between speed and correctness.
-// That includes UTF-8 validation for file based JSON.
-
 import core.stdc.stdio;
 import fast.json;
 import std.socket;
 import std.compiler;
 import std.format;
 import core.thread;
+import std.file : readText;
 
 struct Coord { double x, y, z; }
 
@@ -23,11 +20,13 @@ void notify(string msg) {
 
 void main()
 {
+    string text = readText("./1.json");
+
     notify("GDC fast\t%d".format(getpid()));
 
     double x = 0, y = 0, z = 0;
 
-    auto json = parseJSONFile("./1.json");
+    auto json = parseTrustedJSON(text);
     auto coords = json.coordinates.read!(Coord[]);
 
     foreach (ref coord; coords)

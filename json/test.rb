@@ -20,10 +20,13 @@ if engine == "truffleruby"
     engine = "TruffleRuby JVM"
   end
 end
+
+text = IO.read('1.json')
+
 pid = Process.pid
 notify("#{engine}\t#{pid}")
 
-jobj = JSON.parse(File.read('1.json'))
+jobj = JSON.parse(text)
 coordinates = jobj['coordinates']
 len = coordinates.length
 x = y = z = 0

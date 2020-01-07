@@ -90,7 +90,7 @@ if engine == "truffleruby"
   end
 end
 
-text = File.read(ARGV[0])
+text = IO.read(ARGV[0])
 
 pid = Process.pid
 notify("#{engine}\t#{pid}")

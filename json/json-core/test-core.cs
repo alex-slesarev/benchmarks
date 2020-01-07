@@ -20,10 +20,9 @@ namespace Test
             public List<Coordinate> Coordinates { get; set; }
         }
 
-        static void ParseJson()
+        static void ParseJson(string text)
         {
             var sw = Stopwatch.StartNew();
-            var text = File.ReadAllText("./1.json");
 
             var options = new JsonSerializerOptions
             {
@@ -62,14 +61,15 @@ namespace Test
 
         static void Main(string[] args)
         {
+            var text = File.ReadAllText("./1.json");
             for (int i = 0; i < 4; i++)
             {
-                ParseJson();
+                ParseJson(text);
             }
 
             Notify($"C# System.Text.Json\t{Process.GetCurrentProcess().Id}");
 
-            ParseJson();
+            ParseJson(text);
 
             Notify("stop");
         }

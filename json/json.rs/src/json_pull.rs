@@ -1,13 +1,11 @@
-extern crate memmap;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
 
-use memmap::Mmap;
 use serde::{de, Deserializer};
 use std::fmt;
-use std::fs::File;
+use std::fs;
 use std::str;
 
 #[derive(Deserialize)]
@@ -79,13 +77,11 @@ fn notify(msg: &str) {
 }
 
 fn main() {
+    let content = fs::read_to_string("1.json").unwrap();
+
     notify(&format!("Rust Serde Custom\t{}", std::process::id()));
 
-    let file = File::open("1.json").unwrap();
-    let mmap = unsafe { Mmap::map(&file).unwrap() };
-    let contents = str::from_utf8(&mmap[..]).unwrap();
-
-    let test: TestStruct = serde_json::from_str(&contents).unwrap();
+    let test: TestStruct = serde_json::from_str(&content).unwrap();
 
     let len = test.state.len as f64;
     println!("{}", test.state.x / len);

@@ -44,9 +44,9 @@ RUN export VERSION=ruby-2.7.0 \
 ENV PATH="/opt/ruby/bin:${PATH}"
 
 # https://github.com/dotnet/core/tree/master/release-notes
-ARG DOTNET_CORE=3.0.101
+ARG DOTNET_CORE=3.1.100
 RUN mkdir dotnet && wget --progress=dot:giga -O - \
-    https://download.visualstudio.microsoft.com/download/pr/4f51cfd8-311d-43fe-a887-c80b40358cfd/440d10dc2091b8d0f1a12b7124034e49/dotnet-sdk-$DOTNET_CORE-linux-x64.tar.gz \
+    https://download.visualstudio.microsoft.com/download/pr/d731f991-8e68-4c7c-8ea0-fad5605b077a/49497b5420eecbd905158d86d738af64/dotnet-sdk-$DOTNET_CORE-linux-x64.tar.gz \
     | tar -xz -C dotnet
 ENV PATH="/opt/dotnet:${PATH}"
 
@@ -93,7 +93,7 @@ ENV PATH="/opt/go/bin/:${PATH}"
 
 # https://dlang.org/download.html
 RUN wget --progress=dot:giga -O - \
-    http://downloads.dlang.org/releases/2.x/2.089.1/dmd.2.089.1.linux.tar.xz \
+    http://downloads.dlang.org/releases/2.x/2.090.0/dmd.2.090.0.linux.tar.xz \
     | tar -xJ
 ENV PATH="/opt/dmd2/linux/bin64/:${PATH}"
 

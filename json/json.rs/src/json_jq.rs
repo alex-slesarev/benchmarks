@@ -1,6 +1,5 @@
 use jq_rs;
-use memmap::Mmap;
-use std::fs::File;
+use std::fs;
 use std::str;
 
 fn notify(msg: &str) {
@@ -12,13 +11,10 @@ fn notify(msg: &str) {
 }
 
 fn main() {
-    notify(&format!("Rust jq\t{}", std::process::id()));
-
+    let content = fs::read_to_string("1.json").unwrap();
     let mut program = jq_rs::compile(".coordinates | length as $len | (map(.x) | add) / $len, (map(.y) | add) / $len, (map(.z) | add) / $len").unwrap();
 
-    let file = File::open("1.json").unwrap();
-    let mmap = unsafe { Mmap::map(&file).unwrap() };
-    let content = str::from_utf8(&mmap[..]).unwrap();
+    notify(&format!("Rust jq\t{}", std::process::id()));
 
     let result = program.run(&content).unwrap();
     println!("{}", result);

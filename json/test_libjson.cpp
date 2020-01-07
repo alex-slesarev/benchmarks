@@ -9,12 +9,10 @@
 
 using namespace std;
 
-void read_file(string filename, stringstream &buffer){
-  ifstream f(filename.c_str());
-  if (f)
-  {
+void read_file(const string& filename, stringstream &buffer) {
+  ifstream f(filename);
+  if (f.good()) {
     buffer << f.rdbuf();
-    f.close();
   }
 }
 
@@ -28,13 +26,14 @@ void notify(const string& msg) {
 }
 
 int main() {
+  stringstream ss;
+  read_file("./1.json", ss);
+  string text = ss.str();
+
   stringstream ostr;
   ostr << "C++ json-c\t" << getpid();
   notify(ostr.str());
 
-  stringstream ss;
-  read_file("./1.json", ss);
-  string text = ss.str();
   json_object* jobj = json_tokener_parse(text.c_str());
 
   json_object* coordinates;

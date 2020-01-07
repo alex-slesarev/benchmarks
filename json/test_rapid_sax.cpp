@@ -1,10 +1,11 @@
 #include "rapidjson/reader.h"
-#include "rapidjson/filereadstream.h"
+#include <rapidjson/istreamwrapper.h>
 #include <cstdio>
 #include <iostream>
 #include <libsocket/inetclientstream.hpp>
 #include <sstream>
 #include <unistd.h>
+#include <fstream>
 
 using namespace std;
 using namespace rapidjson;
@@ -93,6 +94,13 @@ private:
   double x_, y_, z_;
 };
 
+void read_file(const string& filename, stringstream &buffer) {
+  ifstream f(filename);
+  if (f.good()) {
+    buffer << f.rdbuf();
+  }
+}
+
 void notify(const string& msg) {
   try {
     libsocket::inet_stream sock("localhost", "9001", LIBSOCKET_IPv4);
@@ -103,18 +111,17 @@ void notify(const string& msg) {
 }
 
 int main() {
+    stringstream ss;
+    read_file("./1.json", ss);
+
     stringstream ostr;
     ostr << "C++ RapidJSON SAX\t" << getpid();
     notify(ostr.str());
 
-    FILE* fp = std::fopen("./1.json", "r");
-    char buffer[65536];
-    FileReadStream frs(fp, buffer, sizeof(buffer));
-
+    IStreamWrapper isw(ss);
     Reader reader;
     CoordinateHandler handler;
-    reader.Parse(frs, handler);
+    reader.Parse(isw, handler);
 
-    fclose(fp);
     notify("stop");
 }

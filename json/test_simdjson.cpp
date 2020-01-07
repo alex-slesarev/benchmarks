@@ -3,8 +3,16 @@
 #include "simdjson/jsonparser.h"
 #include <sstream>
 #include <unistd.h>
+#include <fstream>
 
 using namespace simdjson;
+
+void read_file(const std::string& filename, std::stringstream &buffer) {
+  std::ifstream f(filename);
+  if (f.good()) {
+    buffer << f.rdbuf();
+  }
+}
 
 void notify(const std::string& msg) {
   try {
@@ -16,15 +24,18 @@ void notify(const std::string& msg) {
 }
 
 int main(int argc, char *argv[]) {
+  std::stringstream ss;
+  read_file("./1.json", ss);
+  std::string text = ss.str();
+
   std::stringstream ostr;
   ostr << "C++ simdjson\t" << getpid();
   notify(ostr.str());
 
-  padded_string p = get_corpus("1.json"); 
   ParsedJson pj;
   int res = simdjson::SUCCESS;
-  if (pj.allocate_capacity(p.size())) { // allocate memory for parsing up to p.size() bytes
-    res = json_parse(p, pj); // do the parsing, return 0 on success
+  if (pj.allocate_capacity(text.size())) { // allocate memory for parsing up to p.size() bytes
+    res = json_parse(text, pj); // do the parsing, return 0 on success
   }
   if (res != simdjson::SUCCESS) {
     std::cout << pj.get_error_message() << std::endl;

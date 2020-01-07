@@ -2,6 +2,7 @@ import platform
 import socket
 import sys
 import os
+from pathlib import Path
 
 INC = 1
 MOVE = 2
@@ -74,7 +75,7 @@ def notify(msg):
         if not s.connect_ex(("localhost", 9001)):
             s.sendall(bytes(msg, 'utf8'))
 
-text = open(sys.argv[1], 'r').read()
+text = Path(sys.argv[1]).read_text()
 
 notify("%s\t%d" % (platform.python_implementation(), os.getpid()))
 Program(text).run()

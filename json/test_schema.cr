@@ -25,10 +25,11 @@ def notify(msg)
   end
 end
 
+text = File.read("1.json")
+
 pid = Process.pid
 notify("Crystal Schema\t#{pid}")
 
-text = File.read("1.json")
 coordinates = Coordinates.from_json(text).coordinates
 len = coordinates.size
 x = y = z = 0

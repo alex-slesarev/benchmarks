@@ -28,14 +28,14 @@ void notify(const string& msg) {
 }
 
 int main() {
+    stringstream ss;
+    read_file("./1.json", ss);
+    string text = ss.str();
+
     stringstream ostr;
     ostr << "C++ gason\t" << getpid();
     notify(ostr.str());
 
-    stringstream ss;
-    read_file("./1.json", ss);
-
-    string text = ss.str();
     char *endptr;
     JsonValue jobj;
     JsonAllocator allocator;

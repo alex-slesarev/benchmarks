@@ -11,10 +11,12 @@ def notify(msg)
   end
 end
 
+text = IO.read('1.json')
+
 pid = Process.pid
 notify("Ruby YAJL\t#{pid}")
 
-jobj = Yajl::Parser.new.parse(File.read('1.json'))
+jobj = Yajl::Parser.new.parse(text)
 coordinates = jobj['coordinates']
 len = coordinates.length
 x = y = z = 0

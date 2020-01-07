@@ -1,5 +1,4 @@
-use std::fs::File;
-use std::path::Path;
+use std::fs;
 use std::io::prelude::*;
 use std::vec::Vec;
 use std::io;
@@ -77,13 +76,11 @@ fn notify(msg: &str) {
 }
 
 fn main() {
+    let arg1 = env::args().nth(1).unwrap();
+    let s = fs::read_to_string(arg1).unwrap();
+
     notify(&format!("Rust\t{}", std::process::id()));
 
-    let arg1 = env::args().nth(1).unwrap();
-    let path = Path::new(&arg1);
-    let mut s = String::new();
-    let mut file = File::open(&path).unwrap();
-    file.read_to_string(&mut s).unwrap();
     Program::new(s).run();
 
     notify("stop");

@@ -78,16 +78,11 @@ fn notify(msg: &str) {
 }
 
 fn main() {
-    use std::fs::File;
-    use std::path::Path;
+    use std::fs;
     use std::env;
-    use std::io::Read;
 
     let arg1 = env::args().nth(1).unwrap();
-    let path = Path::new(&arg1);
-    let mut s = String::new();
-    let mut file = File::open(&path).unwrap();
-    file.read_to_string(&mut s).unwrap();
+    let s = fs::read_to_string(arg1).unwrap();
 
     notify(&format!("Rust\t{}", std::process::id()));
 

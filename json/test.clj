@@ -1,17 +1,15 @@
 (ns json
-  (:require [cheshire.core :refer [parse-stream]]
+  (:require [cheshire.core :refer [parse-string]]
             [clojure.java.io :refer [reader]]))
 
-(defn parse []
+(defn parse [text]
   (time
-   (let [data (:coordinates (parse-stream (reader "./1.json") true))
+   (let [data (:coordinates (parse-string text true))
          len  (count data)]
      (loop [sx 0.0 sy 0.0 sz 0.0 [coord & coords] data]
        (if-let [{:keys [x y z]} coord]
          (recur (+ sx x) (+ sy y) (+ sz z) coords)
          (println (/ sx len) (/ sy len) (/ sz len)))))))
-
-(dotimes [i 4] (parse))
 
 (defn notify [msg]
   (try
@@ -20,8 +18,9 @@
       (.println printer msg))
     (catch java.io.IOException e ())))
 
-(notify (format "Clojure\t%d" (.pid (java.lang.ProcessHandle/current))))
+(let [text (slurp "1.json")]
+  (dotimes [i 4] (parse text))
 
-(parse)
-
-(notify "stop")
+  (notify (format "Clojure\t%d" (.pid (java.lang.ProcessHandle/current))))
+  (parse text)
+  (notify "stop"))

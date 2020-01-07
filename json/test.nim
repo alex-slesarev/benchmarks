@@ -12,12 +12,14 @@ proc notify(msg: string) =
   except:
     discard
 
+var text = "1.json".readFile()
+
 var compiler = "Nim Clang"
 when defined(gcc):
   compiler = "Nim GCC"
 notify(&"{compiler}\t{getpid()}")
 
-let jobj = parseFile("1.json")
+let jobj = parseJson(text)
 
 let coordinates = jobj["coordinates"].elems
 let len = float(coordinates.len)

@@ -1,10 +1,5 @@
-extern crate memmap;
-extern crate serde;
-extern crate serde_json;
-
-use memmap::Mmap;
 use serde_json::Value;
-use std::fs::File;
+use std::fs;
 use std::str;
 
 fn notify(msg: &str) {
@@ -16,13 +11,11 @@ fn notify(msg: &str) {
 }
 
 fn main() {
+    let content = fs::read_to_string("1.json").unwrap();
+
     notify(&format!("Rust Serde Untyped\t{}", std::process::id()));
 
-    let file = File::open("1.json").unwrap();
-    let mmap = unsafe { Mmap::map(&file).unwrap() };
-    let contents = str::from_utf8(&mmap[..]).unwrap();
-
-    let value: Value = serde_json::from_str(&contents).unwrap();
+    let value: Value = serde_json::from_str(&content).unwrap();
 
     let coordinates = value.get("coordinates").unwrap().as_array().unwrap();
 

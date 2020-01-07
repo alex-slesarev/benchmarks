@@ -1,12 +1,9 @@
-extern crate memmap;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
 
-use memmap::Mmap;
-
-use std::fs::File;
+use std::fs;
 use std::str;
 
 #[derive(Deserialize)]
@@ -30,13 +27,11 @@ fn notify(msg: &str) {
 }
 
 fn main() {
+    let s = fs::read_to_string("1.json").unwrap();
+
     notify(&format!("Rust Serde Typed\t{}", std::process::id()));
 
-    let file = File::open("1.json").unwrap();
-    let mmap = unsafe { Mmap::map(&file).unwrap() };
-    let s = str::from_utf8(&mmap[..]).unwrap();
-
-    let jobj: TestStruct = serde_json::from_str(s).unwrap();
+    let jobj: TestStruct = serde_json::from_str(&s).unwrap();
 
     let len = jobj.coordinates.len() as f64;
     let mut x = 0_f64;

@@ -25,9 +25,9 @@ notify msg = do
 
 main :: IO ()
 main = do
+    f <- BL.readFile "1.json"
     pid <- getProcessID
     notify $ "Haskell\t" ++ show pid
-    f <- BL.readFile "1.json"
     let Res xsum ysum zsum count = foldl' op  (Res 0 0 0 0)
                                  $ parseLazyByteString parser_coordinates f
     let c = fromIntegral count

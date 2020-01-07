@@ -17,9 +17,10 @@ void notify(string msg) {
 }
 
 int main(string[] args) {
+  string text = readText("./1.json");
+
   notify("%s\t%d".format(name, getpid()));
 
-  string text = cast(string)read("./1.json");
   auto jobj = parseJSON(text).object;
   auto coordinates = jobj["coordinates"].array;
   ulong len = coordinates.length;

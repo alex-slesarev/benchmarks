@@ -120,6 +120,7 @@ open (FH, "<", shift) or die $!;
 undef $/;
 $| = 1;
 my $text = [split //, <FH>];
+close(FH);
 
 my $pid = $$;
 notify("Perl\t${pid}");

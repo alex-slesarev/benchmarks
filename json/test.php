@@ -8,10 +8,12 @@ function notify($msg) {
     }
 }
 
+$text = file_get_contents("./1.json");
+
 $pid = posix_getpid();
 notify("PHP\t$pid");
 
-$jobj = json_decode(file_get_contents("./1.json"), true);
+$jobj = json_decode($text, true);
 
 $coordinates = $jobj['coordinates'];
 $len = count($coordinates);
