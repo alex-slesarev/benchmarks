@@ -47,7 +47,7 @@ end
 results = keys.map { |k|
   rows = lines.select { |line| line.name == k }
   if rows.length != ATTEMPTS
-    abort("Integrity check failed")
+    abort("Integrity check failed (#{k})")
   end
   secs = sd(rows.map { |row| row.secs.to_f })
   mb = sd(rows.map { |row| row.mb.to_f })

@@ -33,7 +33,7 @@ class matmulnd4j {
         INDArray t =  Nd4j.matmul(matgen(500), matgen(500));
         System.out.println("JIT warming up: " + t.getDouble(1, 1));
 		
-        notify("Java\t" + ProcessHandle.current().pid());
+        notify("Java ND4J\t" + ProcessHandle.current().pid());
         long start_time = System.currentTimeMillis();
 
         INDArray a, b, x;
