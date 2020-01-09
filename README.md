@@ -1,5 +1,23 @@
-Some benchmarks of different languages
---------------------------------------
+<!-- md-toc-begin -->
+# Table of Content
+* [Overview](#overview)
+* [Test Cases](#test-cases)
+  * [Brainfuck v2.0](#brainfuck-v20)
+    * [bench.b](#benchb)
+    * [mandel.b](#mandelb)
+  * [Base64](#base64)
+  * [Json](#json)
+  * [Matmul](#matmul)
+  * [Havlak](#havlak)
+* [Tests Execution](#tests-execution)
+  * [Environment](#environment)
+  * [Using Docker](#using-docker)
+  * [Manual Execution](#manual-execution)
+    * [Prerequisites](#prerequisites)
+* [Contribution](#contribution)
+<!-- md-toc-end -->
+
+# Overview
 
 The benchmarks follow the criteria:
 
@@ -11,13 +29,13 @@ The benchmarks follow the criteria:
 
   - The used algorithms are similar between the languages (reference implementations), variants are acceptable if the reference implementation exists.
   - All final binaries are releases (optimized for performance if possible) as debug performance may vary too much depending on the compiler.
-  - JIT warming up is applied when necessary, and the actual measurements are taken only after the test signals the runner with the TCP request.
+  - JIT warming up is applied when necessary, and the actual measurements are taken only within the specified boundaries.
 
-# UPDATE 
+UPDATE: 2020-01-09
 
-2019-12-13
+# Test Cases
 
-# Brainfuck v2.0
+## Brainfuck v2.0
 
 Testing brainfuck implementations using two code samples (bench.b and mandel.b).
 
@@ -105,7 +123,7 @@ Testing brainfuck implementations using two code samples (bench.b and mandel.b).
 | TruffleRuby JVM | 186.68 ± 02.26 | 828.89 ± 35.34 | 4462.33 ± 1621.33 |
 |     Chez Scheme | 246.63 ± 01.13 |  29.70 ± 00.07 | 5861.64 ± 1430.51 |
 
-# Base64
+## Base64
 
 Testing large blob base64 encoding/decoding into newly allocated buffers.
 
@@ -144,7 +162,7 @@ Testing large blob base64 encoding/decoding into newly allocated buffers.
 |                   JRuby | 16.08 ± 00.36 | 208.83 ± 07.07 | 426.74 ± 10.46 |
 | Perl MIME::Base64::Perl | 28.45 ± 00.29 |   8.95 ± 00.08 | 723.18 ± 13.87 |
 
-# Json
+## Json
 
 Testing parsing and simple calculating of values from a big JSON file.
 
@@ -196,7 +214,7 @@ Testing parsing and simple calculating of values from a big JSON file.
 |       Perl JSON::Tiny | 25.31 ± 00.24 |  640.24 ± 00.08 |  624.18 ± 142.93 |
 |       TruffleRuby JVM | 28.34 ± 00.63 | 1696.62 ± 12.48 | 1203.36 ± 133.72 |
 
-# Matmul
+## Matmul
 
 Testing allocating and multiplying matrices.
 
@@ -239,7 +257,7 @@ Testing allocating and multiplying matrices.
 |                   Tcl | 583.29 ± 04.95 |  280.60 ± 00.11 | 12426.05 ± 4797.48 |
 |                  Perl | 658.70 ± 03.72 |  608.42 ± 00.09 | 14585.76 ± 3310.24 |
 
-# Havlak
+## Havlak
 
 Testing Havlak's loop finder implementations.
 
@@ -262,7 +280,9 @@ Testing Havlak's loop finder implementations.
 | C# .NET Core |  43.32 ± 00.30 | 542.44 ± 15.92 |  1110.24 ± 10.24 |
 |       Python | 172.09 ± 00.58 | 466.74 ± 00.04 | 4343.91 ± 354.48 |
 
-# Environment
+# Tests Execution
+
+## Environment
 
 CPU: Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz
 
@@ -270,16 +290,16 @@ Base Docker image: Debian GNU/Linux bullseye/sid
 
 | Language     | Version                         |
 | ------------ | ------------------------------- |
-| .NET Core    | 3.0.101                         |
-| C# .NET Core | 3.3.1-beta4-19462-11 (66a912c9) |
-| C# Mono      | 6.4.0.198                       |
+| .NET Core    | 3.1.100                         |
+| C# .NET Core | 3.4.0-beta4-19562-05 (ff930dec) |
+| C# Mono      | 6.6.0.161                       |
 | Chez Scheme  | 9.5                             |
-| Clang        | 9.0.0                           |
+| Clang        | 9.0.1                           |
 | Clojure      | "1.10.1"                        |
-| Crystal      | 0.31.1                          |
-| DMD          | v2.089.0                        |
+| Crystal      | 0.32.1                          |
+| DMD          | v2.090.0                        |
 | Elixir       | 1.9.1                           |
-| F# .NET Core | 10.6.0.0 for F# 4.7             |
+| F# .NET Core | 10.7.0.0 for F# 4.7             |
 | GCC          | 9.2.1                           |
 | GCC Go       | 9.2.1                           |
 | GDC          | 9.2.1                           |
@@ -287,30 +307,28 @@ Base Docker image: Debian GNU/Linux bullseye/sid
 | Haskell      | 8.8.1                           |
 | JRuby        | 9.2.9.0                         |
 | Java         | 13.0.1                          |
-| Julia        | v"1.3.0"                        |
+| Julia        | v"1.3.1"                        |
 | Kotlin       | 1.3.61                          |
-| LDC          | 1.18.0                          |
+| LDC          | 1.19.0                          |
 | Lua          | Lua 5.3                         |
 | LuaJIT       | LuaJIT 2.1.0-beta3              |
 | MLton        | 20180207                        |
 | Nim          | 1.0.4                           |
-| Node.js      | v13.3.0                         |
+| Node.js      | v13.5.0                         |
 | OCaml        | 4.09.0                          |
 | PHP          | 7.3.12-1                        |
 | Perl         | v5.30.0                         |
-| PyPy         | 7.2.0-final0 for Python 3.6.9   |
-| Python       | 3.7.5                           |
+| PyPy         | 7.3.0-final0 for Python 3.6.9   |
+| Python       | 3.7.6                           |
 | Racket       | "7.5"                           |
-| Ruby         | 2.6.5p114                       |
-| Rust         | 1.39.0                          |
+| Ruby         | 2.7.0p0                         |
+| Rust         | 1.40.0                          |
 | Scala        | 2.13.1                          |
-| Swift        | swift-5.1.2-RELEASE             |
+| Swift        | swift-5.1.3-RELEASE             |
 | Tcl          | 8.6                             |
-| TruffleRuby  | 19.3.0                          |
-| V            | 0.1.23 6d5e9f8                  |
+| TruffleRuby  | 19.3.0.2                        |
+| V            | 0.1.24 8c59232                  |
 | Vala         | 0.46.5                          |
-
-# Testing
 
 ## Using Docker
 
@@ -335,7 +353,7 @@ where <cmd> is:
 
 Please note that the actual measurements provided in the project are taken semi-manually (via `shell`) as the full update takes days and could have occassional issues in Docker.
 
-## Manual
+## Manual Execution
 
 The tests should be built first (using `build.sh`) and after that executed (using `run.sh` and `run2.sh` where applicable). The measurements are taken using `analyze.rb` script:
 
@@ -383,3 +401,14 @@ For Haskell:
 For C, C++, Chez Scheme:
 
  - [libsocket](https://github.com/dermesser/libsocket/) for TCP connectivity between the tests and the test runner
+
+# Contribution
+
+Please follow the criteria specified in the [Overview](#overview). Besides that please ensure that the communication protocol between a test and the test runner is satisfied:
+
+ - The test runner listens on localhost:9001;
+ - All messages are sent using TCP sockets closed immediately after the message has been sent;
+ - There are two messages sent from a test (it establishes the measurement boundary):
+  1. The beginning message having the format *name of the test*/t*process ID* (the process ID is used to measure the memory consumption). Please note that the name of the test couldn't use Tab character as it's a delimiter;
+  2. The end message with any content (mostly it's "stop" for consistency).
+ - The test runner could be unavailable (if the test is launched as is) and the test should gracefully handle it.
